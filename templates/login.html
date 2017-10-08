@@ -44,7 +44,8 @@
 <body style="text-align:center; background-attachment: fixed;" background="{{url_for('static', filename='ocean.jpg')}}">
 </div>
   <div id="head">
-    <h1 style= "text-align: center; font-size: 80px">Travel AnyWhere</h1>
+
+    <h1 style= "text-align: center; font-size: 80px; "><img src="{{url_for('static', filename='logo.png')}}" alt="End" style="width: 90px; opacity: 1 display-block: inline; margin-right: 150px">Travel AnyWhere<img src="{{url_for('static', filename='logo.png')}}" alt="End" style="width: 90px; opacity: 1 display-block: inline; margin-left: 150px"></h1>
       <h3 style= "text-align: center">With Us</h3>
       <br>
   </div>
@@ -89,7 +90,7 @@
                 </div>
         
                 <div class="item">
-                  <img src="pictures/hoop.jpg" alt="End" style="width: 100%; opacity: 1">
+                  <img src="{{url_for('static', filename='logo.png')}}" alt="End" style="width: 100%; opacity: 1">
                   <div class="carousel-caption cap">
                     <h2>TravelAnyWhere's Got You Covered</h2>
                   </div>
