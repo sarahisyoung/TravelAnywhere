@@ -33,8 +33,9 @@
         font-style: italic;
       }
 
-      h1 {
+      h1, h2 {
         font-family: 'Pacifico', cursive;
+        font-size: 50px;
       }
   
   </style>
@@ -43,16 +44,17 @@
 <body style="text-align:center; background-attachment: fixed;" background="{{url_for('static', filename='ocean.jpg')}}">
 </div>
   <div id="head">
-    <h1 style= "text-align: center; font-size: 50px">Travel AnyWhere</h1>
+    <h1 style= "text-align: center; font-size: 80px">Travel AnyWhere</h1>
       <h3 style= "text-align: center">With Us</h3>
       <br>
   </div>
 
 
 
+
   <div class="container-fluid">
       
-    <div >
+    <div class="container" >
         <div id="myCarousel" class="carousel slide" data-ride="carousel" width= "90%">
           <!-- Indicators -->
           <ol class="carousel-indicators">
@@ -63,19 +65,19 @@
             <li data-target="#myCarousel" data-slide-to="4"></li>
           </ol>
             <!-- Wrapper for slides -->
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="font-style: italic; font-weight: bold">
 
                 <div class="item active">
                   <img src="{{url_for('static', filename='trips.png')}}" alt="roads" style="width: 100%;">
                   <div class="carousel-caption">
-                    <h1 style="font-style: italic; font-weight: bold">Plan the Perfect Trip with Ease</h1>
+                    <h1 style="color: black; font-style: italic; font-weight: bold">Plan the Perfect Trip with Ease</h1>
                   </div>
                 </div>
 
                 <div class="item">
                   <img src="{{url_for('static', filename='canyon.jpg')}}" alt="Hike" style="width: 100%;">
                   <div class="carousel-caption cap">
-                    <h2>Go Out on a Hike</h2>
+                    <h2 style="font-style: italic; font-weight: bold">Go Out on a Hike</h2>
                   </div>
                 </div>
 
@@ -110,23 +112,22 @@
     </div>
 
 
-  <div background="{{url_for('static', filename='doe.jpg')}}">
+  <div class= "container" background="{{url_for('static', filename='doe.jpg')}}">
     <h4>Upload a picture of any landmark you wish to get to from magazines, online pictures, etc., and we will generate a trip plan for you! It's as simple as that.</h4>
   </div>
 
   <div id="upload" style="display:inline-block">
-    <h2>Try it out!</h2>
+    <h2 style="color: white; font-size: 80px">Try it out!</h2>
+    <br>
     <form action = "{{ url_for('index') }}" method = "POST" 
          enctype = "multipart/form-data">
          <ul> <input type=file name="file"> </ul>
-        <ul><input type=submit name="csv" value='Upload'></input></ul>
+        <ul ><input class="btn btn-primary" type=submit name="csv" value='Generate Trip Plan!'></input></ul>
       </form>
   </div>
   <br>
 
-  </div>
-    <button onClick="generate()"> Generate Trip Plan! </button>
-  </div>
+
 
   <div id="googleMap" style="width:100%;height:400px;"></div>
 
@@ -169,7 +170,7 @@
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoblwhxeHLSHVIxA22e5fzeOrKScdm4-M&callback=myMap"></script>
-  <h2>Login</h2>
+
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 
 {% endblock %}

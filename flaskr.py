@@ -4,7 +4,8 @@ import sqlite3
 import csv
 import argparse
 import io
-
+from bs4 import BeautifulSoup
+from bs4 import NavigableString
 from google.cloud import vision
 from google.cloud.vision import types
 from flask import Flask, request, session, g, redirect, url_for, abort, \
@@ -32,12 +33,30 @@ def index():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            
+            place = landmarker.detect_landmarks(filename)[0]
+            loc = str(landmarker.detect_landmarks(filename)[1]) + ", " + str(landmarker.detect_landmarks(filename)[2])
+            print(place)
 
-            place = landmarker.detect_landmarks(filename)
-            f = open("places.txt","w")
-            f.write(place[0] + "\n")
-            f.close()
+    
+            
+            with open("templates/untitled.html") as inf:
+                txt = inf.read()
+                soup = BeautifulSoup(txt)
 
+            tag = soup.new_tag('option')
+            tag.string = place
+            tag['value'] = loc;
+            tag['id'] = "newest";
+            soup.find(attrs={"id": "end"}).clear()
+            soup.find(attrs={"id": "end"}).insert(0, tag)
+
+   
+
+            with open("templates/untitled.html", "w") as outf:
+                outf.write(str(soup))
+
+     
             return render_template('untitled.html', error=error)
             
     
