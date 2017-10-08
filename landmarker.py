@@ -16,7 +16,6 @@
 
 import argparse
 import io
-
 from google.cloud import vision
 from google.cloud.vision import types
 
@@ -41,7 +40,7 @@ def detect_landmarks(path):
         print(landmark.description)
         for location in landmark.locations:
             lat_lng = location.lat_lng
-            print('Latitude'.format(lat_lng.latitude))
-            print('Longitude'.format(lat_lng.longitude))
+            print(lat_lng)
+        return [landmark.description, lat_lng]
     # [END migration_landmark_detection]
 # [END def_detect_landmarks]

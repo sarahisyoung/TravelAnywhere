@@ -11,13 +11,15 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from werkzeug.utils import secure_filename
 from collections import OrderedDict
+import landmarker
 
-UPLOAD_FOLDER = '/Users/kevinliu743/Downloads'
-ALLOWED_EXTENSIONS = set(['png', 'jpg'])
+UPLOAD_FOLDER = '/Users/sarahyoung/Downloads'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app = Flask(__name__) # create the application instance :)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+place = ""
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -30,7 +32,14 @@ def index():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('index'))
+
+            place = landmarker.detect_landmarks(filename)
+            f = open("places.txt","w")
+            f.write(place[0] + "\n")
+            f.close()
+
+            return render_template('untitled.html', error=error)
+            
     
             
         # file = request.files['data_file.']
