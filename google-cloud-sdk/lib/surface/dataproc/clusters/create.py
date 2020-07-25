@@ -55,16 +55,16 @@ class Create(base.CreateCommand):
         '-z',
         help='The compute zone (e.g. us-central1-a) for the cluster.',
         action=actions.StoreProperty(properties.VALUES.compute.zone))
-    parser.add_argument('--num-masters', type=int, hidden=True)
+    parser.add_argument('--num-mains', type=int, hidden=True)
     parser.add_argument('--single-node', action='store_true', hidden=True)
     parser.add_argument('--no-address', action='store_true', hidden=True)
 
   @staticmethod
   def ValidateArgs(args):
-    if args.master_boot_disk_size_gb:
-      log.warn('The --master-boot-disk-size-gb flag is deprecated. '
-               'Use equivalent --master-boot-disk-size=%sGB flag.',
-               args.master_boot_disk_size_gb)
+    if args.main_boot_disk_size_gb:
+      log.warn('The --main-boot-disk-size-gb flag is deprecated. '
+               'Use equivalent --main-boot-disk-size=%sGB flag.',
+               args.main_boot_disk_size_gb)
 
     if args.worker_boot_disk_size_gb:
       log.warn('The --worker-boot-disk-size-gb flag is deprecated. '
@@ -182,14 +182,14 @@ class CreateBeta(Create):
         action=actions.StoreProperty(properties.VALUES.compute.zone))
 
     parser.add_argument(
-        '--num-masters',
+        '--num-mains',
         type=int,
         help="""\
-      The number of master nodes in the cluster.
+      The number of main nodes in the cluster.
 
       [format="csv",options="header"]
       |========
-      Number of Masters,Cluster Mode
+      Number of Mains,Cluster Mode
       1,Standard
       3,High Availability
       |========
@@ -201,7 +201,7 @@ class CreateBeta(Create):
         help="""\
       Create a single node cluster.
 
-      A single node cluster has all master and worker components.
+      A single node cluster has all main and worker components.
       It cannot have any separate worker nodes.
       """)
 
@@ -230,7 +230,7 @@ class CreateBeta(Create):
         "2017-08-29T18:52:51.142Z"
         """)
 
-    for instance_type in ('master', 'worker'):
+    for instance_type in ('main', 'worker'):
       help_msg = """\
       Attaches accelerators (e.g. GPUs) to the {instance_type}
       instance(s).
@@ -272,10 +272,10 @@ class CreateBeta(Create):
 
   @staticmethod
   def ValidateArgs(args):
-    if args.master_accelerator and 'type' not in args.master_accelerator:
+    if args.main_accelerator and 'type' not in args.main_accelerator:
       raise exceptions.InvalidArgumentException(
-          '--master-accelerator', 'accelerator type must be specified. '
-          'e.g. --master-accelerator type=nvidia-tesla-k80,count=2')
+          '--main-accelerator', 'accelerator type must be specified. '
+          'e.g. --main-accelerator type=nvidia-tesla-k80,count=2')
     if args.worker_accelerator and 'type' not in args.worker_accelerator:
       raise exceptions.InvalidArgumentException(
           '--worker-accelerator', 'accelerator type must be specified. '
